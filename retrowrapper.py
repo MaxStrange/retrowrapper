@@ -4,13 +4,22 @@ This module exposes the RetroWrapper class.
 import multiprocessing
 import retro
 
+retro_make_func = retro.make
+
+def setRetroMake( new_make_func ):
+    """
+    Allows you to change the retro make function. new_make_func should be
+    a function with signature function(game, **kwargs) -> Gym.Env
+    """
+    retro_make_func = new_make_func
+
 def _retrocom(rx, tx, game, kwargs):
     """
     This function is the target for RetroWrapper's internal
     process and does all the work of communicating with the
     environment.
     """
-    env = retro.make(game, **kwargs)
+    env = retro_make_func(game, **kwargs)
 
     # Sit around on the queue, waiting for calls from RetroWrapper
     while True:
@@ -57,7 +66,7 @@ class RetroWrapper():
     symbol = "THIS IS A SPECIAL MESSAGE FOR YOU"
 
     def __init__(self, game, **kwargs):
-        tempenv = retro.make(game, **kwargs)
+        tempenv = retro_make_func(game, **kwargs)
         tempenv.reset()
         self.action_space = tempenv.action_space
         self.gamename = tempenv.gamename
