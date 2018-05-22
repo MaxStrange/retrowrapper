@@ -7,7 +7,7 @@ import gc
 
 MAKE_RETRIES = 5
 
-def setRetroMake( new_retro_make_func ):
+def set_retro_make( new_retro_make_func ):
     RetroWrapper.retro_make_func = new_retro_make_func
 
 def _retrocom(rx, tx, game, kwargs):
