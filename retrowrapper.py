@@ -3,15 +3,13 @@ This module exposes the RetroWrapper class.
 """
 import multiprocessing
 import retro
+import gc
+import time
 
-retro_make_func = retro.make
+MAKE_RETRIES = 5
 
-def setRetroMake( new_make_func ):
-    """
-    Allows you to change the retro make function. new_make_func should be
-    a function with signature function(game, **kwargs) -> Gym.Env
-    """
-    retro_make_func = new_make_func
+def setRetroMake( new_retro_make_func ):
+    RetroWrapper.retro_make_func = new_retro_make_func
 
 def _retrocom(rx, tx, game, kwargs):
     """
@@ -19,7 +17,7 @@ def _retrocom(rx, tx, game, kwargs):
     process and does all the work of communicating with the
     environment.
     """
-    env = retro_make_func(game, **kwargs)
+    env = RetroWrapper.retro_make_func(game, **kwargs)
 
     # Sit around on the queue, waiting for calls from RetroWrapper
     while True:
@@ -64,10 +62,30 @@ class RetroWrapper():
     Call functions on this object exactly as if it were a retro env.
     """
     symbol = "THIS IS A SPECIAL MESSAGE FOR YOU"
+    retro_make_func = retro.make
 
     def __init__(self, game, **kwargs):
-        tempenv = retro_make_func(game, **kwargs)
+        print( 'Hello world asdf', RetroWrapper.retro_make_func )
+        tempenv = None
+        retry_counter = MAKE_RETRIES
+        while True:
+            try:
+                tempenv = RetroWrapper.retro_make_func(game, **kwargs)
+            except RuntimeError: # Sometimes we need to gc.collect because previous tempenvs haven't been cleaned up.
+                gc.collect()
+                retry_counter -= 1
+                if retry_counter > 0:
+                    continue
+            break
+
+        if tempenv == None:
+            raise RuntimeError( 'Unable to create tempenv' )
+
         tempenv.reset()
+
+        if hasattr( tempenv, 'unwrapped' ): # Wrappers don't have gamename
+            tempenv = tempenv.unwrapped
+
         self.action_space = tempenv.action_space
         self.gamename = tempenv.gamename
         self.initial_state = tempenv.initial_state
