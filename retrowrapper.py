@@ -65,7 +65,6 @@ class RetroWrapper():
     retro_make_func = retro.make
 
     def __init__(self, game, **kwargs):
-        print( 'Hello world asdf', RetroWrapper.retro_make_func )
         tempenv = None
         retry_counter = MAKE_RETRIES
         while True:
