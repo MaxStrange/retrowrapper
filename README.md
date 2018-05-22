@@ -28,3 +28,29 @@ if __name__ == "__main__":
         _obs, _rew, done, _info = env2.step(action)
         env2.render()
 ```
+
+## Using a custom make function
+
+Sometimes you will need a custom make function, for example the `retro_contest`
+repository requires you to use their make function rather than `retro.make`.
+
+In these cases you can use the `retrowrapper.set_retro_make()` to set a new
+make function.
+
+Example usage:
+
+```
+import retrowrapper
+from retro_contest.local import make
+
+retrowrapper.set_retro_make( make )
+
+env1 = retrowrapper.RetroWrapper(
+    game='SonicTheHedgehog2-Genesis', 
+    state='MetropolisZone.Act1'
+)
+env2 = retrowrapper.RetroWrapper(
+    game='SonicTheHedgehog2-Genesis', 
+    state='MetropolisZone.Act2'
+)
+```
