@@ -4,7 +4,6 @@ This module exposes the RetroWrapper class.
 import multiprocessing
 import retro
 import gc
-import time
 
 MAKE_RETRIES = 5
 
