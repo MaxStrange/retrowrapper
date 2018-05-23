@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name="retrowrapper",
-    version="0.1.0",
+    version="0.2.0",
     author="Max Strange",
     author_email="maxfieldstrange@gmail.com",
     description="Wrapper for OpenAI Retro Gym environments to allow multiple processes.",
