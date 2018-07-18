@@ -81,12 +81,12 @@ class RetroWrapper():
 
         tempenv.reset()
 
-        if hasattr( tempenv, 'unwrapped' ): # Wrappers don't have gamename
-            tempenv = tempenv.unwrapped
+        if hasattr( tempenv, 'unwrapped' ): # Wrappers don't have gamename or initial_state
+            tempenv_unwrapped = tempenv.unwrapped
+            self.gamename = tempenv_unwrapped.gamename
+            self.initial_state = tempenv_unwrapped.initial_state
 
         self.action_space = tempenv.action_space
-        self.gamename = tempenv.gamename
-        self.initial_state = tempenv.initial_state
         self.metadata = tempenv.metadata
         self.observation_space = tempenv.observation_space
         self.reward_range = tempenv.reward_range
