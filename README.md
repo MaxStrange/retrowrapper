@@ -1,5 +1,7 @@
 # retrowrapper
 
+[![Build Status](https://travis-ci.org/MaxStrange/retrowrapper.svg?branch=master)](https://travis-ci.org/MaxStrange/retrowrapper)
+
 Wrapper for OpenAI Retro envs for parallel execution
 
 OpenAI's [Retro](https://github.com/openai/retro) exposes an OpenAI [gym](https://gym.openai.com/) interface for Deep Reinforcement Learning, but
