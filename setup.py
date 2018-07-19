@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name="retrowrapper",
-    version="0.2.0",
+    version="0.2.1",
     author="Max Strange",
     author_email="maxfieldstrange@gmail.com",
     description="Wrapper for OpenAI Retro Gym environments to allow multiple processes.",
@@ -25,5 +25,6 @@ setup(
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
     ]
 )
