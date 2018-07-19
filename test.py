@@ -16,5 +16,4 @@ if __name__ == "__main__":
 
         action = env2.action_space.sample()
         _obs, _rew, done, _info = env2.step(action)
-        _obs, _rew, done, _info = env2.step(action)
         env2.render()
