@@ -35,12 +35,6 @@ def _retrocom(rx, tx, game, kwargs):
             result = getattr(env, attr)
             if callable(result):
                 result = result(*args, **kwargs)
-            if type(result) == retro.retro_env.GameData:
-                # GameObjects can't be pickled (and therefore can't be sent over the queue) due
-                # to them secretly being C++ objects. So get the useful information out of them
-                # and return them as a tuple of that info instead.
-                observation, reward, done, info = result
-                result = (observation, reward, done, info)
             tx.put(result)
 
 
